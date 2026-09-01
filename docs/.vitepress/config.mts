@@ -17,6 +17,7 @@ export default defineConfig({
       { text: '软件配置', link: '/config/basic-config' },
       { text: '网络验证', link: '/verify/overview' },
       { text: '构建教程', link: '/build/env' },
+      { text: '作者主页', link: 'https://xiyuemax.github.io' },
       { text: 'GitHub 源码', link: 'https://github.com/XiYueMax/SiyoX' }
     ],
     sidebar: [
