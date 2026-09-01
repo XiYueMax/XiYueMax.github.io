@@ -18,6 +18,9 @@ hero:
     - theme: alt
       text: 构建教程
       link: /build/compile
+    - theme: alt
+      text: 作者主页
+      link: https://xiyuemax.github.io
 
 features:
   - icon: 🛡️
