@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XiYue. | 个人主页与开源项目导航</title>
+  <meta name="description" content="XiYueMax 个人主页与开源项目导航 - Minecraft 客户端辅助框架、在线工具与美化主题">
+  <link rel="icon" type="image/png" href="avatar.png">
+  
+  <style>
+    :root {
+      --bg-primary: #0a0c10;
+      --bg-secondary: #131720;
+      --bg-card: rgba(22, 27, 34, 0.75);
+      --bg-card-hover: rgba(30, 36, 46, 0.95);
+      --text-primary: #f0f6fc;
+      --text-secondary: #8b949e;
+      --text-muted: #6e7681;
+      --accent: #58a6ff;
+      --accent-gradient: linear-gradient(135deg, #00C6FF 0%, #0A84FF 50%, #5E5CE6 100%);
+      --card-border: rgba(240, 246, 252, 0.1);
+      --card-border-hover: rgba(88, 166, 255, 0.4);
+      --badge-bg: rgba(56, 139, 253, 0.15);
+      --badge-text: #58a6ff;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      --glow: rgba(10, 132, 255, 0.25);
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f6f8fa;
+      --bg-secondary: #ffffff;
+      --bg-card: rgba(255, 255, 255, 0.85);
+      --bg-card-hover: rgba(255, 255, 255, 1);
+      --text-primary: #1f2328;
+      --text-secondary: #57606a;
+      --text-muted: #8c959f;
+      --accent: #0969da;
+      --accent-gradient: linear-gradient(135deg, #0070f3 0%, #00a6fb 100%);
+      --card-border: rgba(31, 35, 40, 0.12);
+      --card-border-hover: rgba(9, 105, 218, 0.4);
+      --badge-bg: rgba(9, 105, 218, 0.1);
+      --badge-text: #0969da;
+      --shadow: 0 10px 30px rgba(140, 149, 159, 0.15);
+      --glow: rgba(9, 105, 218, 0.15);
+    }
+
+    /* 消除浏览器自带点击蓝框 / 聚焦外边框 */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent !important;
+      outline: none !important;
+    }
+
+    *:focus, *:focus-visible, *:focus-within,
+    button:focus, button:focus-visible,
+    a:focus, a:focus-visible {
+      outline: none !important;
+      box-shadow: none !important;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* 动态光晕背景效果 */
+    .ambient-glow {
+      position: fixed;
+      top: -150px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 700px;
+      height: 400px;
+      background: radial-gradient(circle, var(--glow) 0%, transparent 70%);
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+      transition: background 0.3s ease;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 960px;
+      padding: 40px 20px 60px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* 顶部操作条 */
+    .top-bar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .theme-toggle-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--card-border);
+      color: var(--text-primary);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 18px;
+      transition: all 0.25s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .theme-toggle-btn:hover {
+      border-color: var(--card-border-hover);
+      transform: scale(1.08);
+    }
+
+    /* 个人资料卡片 */
+    .profile-card {
+      text-align: center;
+      padding: 36px 20px 28px;
+      margin-bottom: 40px;
+    }
+
+    .avatar-wrapper {
+      position: relative;
+      width: 112px;
+      height: 112px;
+      margin: 0 auto 18px;
+    }
+
+    .avatar-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 8px 24px var(--glow);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .avatar-wrapper:hover .avatar-img {
+      transform: scale(1.05) rotate(3deg);
+      box-shadow: 0 12px 32px var(--glow);
+    }
+
+    .profile-name {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 6px;
+    }
+
+    .profile-handle {
+      font-size: 15px;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+      font-weight: 500;
+    }
+
+    .profile-bio {
+      font-size: 15px;
+      color: var(--text-secondary);
+      max-width: 580px;
+      margin: 0 auto 24px;
+      line-height: 1.6;
+    }
+
+    .profile-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+
+    .action-btn-primary {
+      background: var(--accent-gradient);
+      color: #ffffff;
+      box-shadow: 0 4px 16px var(--glow);
+    }
+
+    .action-btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px var(--glow);
+      opacity: 0.95;
+    }
+
+    .action-btn-secondary {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(10px);
+    }
+
+    .action-btn-secondary:hover {
+      border-color: var(--card-border-hover);
+      transform: translateY(-2px);
+      background: var(--bg-card-hover);
+    }
+
+    /* 项目板块标题 */
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-left: 4px;
+    }
+
+    /* 项目卡片栅格 */
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 18px;
+      margin-bottom: 40px;
+    }
+
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(12px);
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .project-card:hover {
+      border-color: var(--card-border-hover);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+      background: var(--bg-card-hover);
+    }
+
+    .project-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .project-icon {
+      font-size: 28px;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--badge-bg);
+      border-radius: 10px;
+    }
+
+    .project-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .project-desc {
+      font-size: 13.5px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      margin-bottom: 18px;
+      flex-grow: 1;
+    }
+
+    .project-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 14px;
+      border-top: 1px solid var(--card-border);
+      font-size: 12.5px;
+    }
+
+    .project-tag {
+      background: var(--badge-bg);
+      color: var(--badge-text);
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 11.5px;
+    }
+
+    .project-action-link {
+      color: var(--accent);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: gap 0.2s ease;
+    }
+
+    .project-card:hover .project-action-link {
+      gap: 8px;
+    }
+
+    /* 快捷入口链接条 */
+    .quick-links-card {
+      background: var(--bg-card);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+      backdrop-filter: blur(12px);
+      margin-bottom: 40px;
+    }
+
+    .quick-links-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .quick-links-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .quick-links-sub {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* 页脚 */
+    footer {
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-muted);
+      padding-top: 20px;
+      border-top: 1px solid var(--card-border);
+      margin-top: auto;
+      width: 100%;
+    }
+
+    @media (max-width: 640px) {
+      .profile-name { font-size: 26px; }
+      .container { padding: 24px 16px 40px; }
+      .project-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ambient-glow"></div>
+
+  <div class="container">
+    
+    <!-- 顶部主题切换 -->
+    <div class="top-bar">
+      <button class="theme-toggle-btn" id="themeToggle" title="切换深色/浅色模式">🌓</button>
+    </div>
+
+    <!-- 个人信息主体 -->
+    <section class="profile-card">
+      <div class="avatar-wrapper">
+        <img src="avatar.png" alt="XiYueMax Avatar" class="avatar-img" onerror="this.src='https://avatars.githubusercontent.com/u/305073613?v=4'">
+      </div>
+      <h1 class="profile-name">XiYue.</h1>
+      <p class="profile-handle">@XiYueMax</p>
+      <p class="profile-bio">专注于 Minecraft 客户端辅助开发 · Android 底层与网络验证 · Web 工具与界面美化 · 持续探索开源</p>
+      
+      <div class="profile-links">
+        <a href="https://xiyuemax.github.io/SiyoX-Docs/" target="_blank" class="action-btn action-btn-primary">
+          📖 SiyoX 官方文档站
+        </a>
+        <a href="https://github.com/XiYueMax" target="_blank" class="action-btn action-btn-secondary">
+          ⭐️ GitHub 个人主页
+        </a>
+      </div>
+    </section>
+
+    <!-- 开源项目展台 -->
+    <h2 class="section-title">🌟 开源项目矩阵</h2>
+    <div class="project-grid">
+
+      <!-- SiyoX -->
+      <a href="https://github.com/XiYueMax/SiyoX" target="_blank" class="project-card">
+        <div>
+          <div class="project-header">
+            <div class="project-icon">🚀</div>
+            <div>
+              <h3 class="project-title">SiyoX</h3>
+            </div>
+          </div>
+          <p class="project-desc">专为网易《我的世界》（Minecraft）打造的 Android 客户端辅助与多协议网络验证资源注入框架，基于 Native C++ 安全底层。</p>
+        </div>
+        <div class="project-footer">
+          <span class="project-tag">Java / C++ / Xposed</span>
+          <span class="project-action-link">GitHub 仓库 ➔</span>
+        </div>
+      </a>
+
+      <!-- SiyoX-Docs -->
+      <a href="https://xiyuemax.github.io/SiyoX-Docs/" target="_blank" class="project-card">
+        <div>
+          <div class="project-header">
+            <div class="project-icon">📖</div>
+            <div>
+              <h3 class="project-title">SiyoX-Docs</h3>
+            </div>
+          </div>
+          <p class="project-desc">SiyoX 官方全量在线开发文档站点，提供多验证平台（EPIC / T3 / 微验）后台配置指南、参数手册与无签名构建教程。</p>
+        </div>
+        <div class="project-footer">
+          <span class="project-tag">VitePress / 文档站</span>
+          <span class="project-action-link">在线文档 ➔</span>
+        </div>
+      </a>
+
+      <!-- PicturesToMinecraftTextPainting -->
+      <a href="https://github.com/XiYueMax/PicturesToMinecraftTextPainting" target="_blank" class="project-card">
+        <div>
+          <div class="project-header">
+            <div class="project-icon">🎨</div>
+            <div>
+              <h3 class="project-title">PicturesToMinecraftTextPainting</h3>
+            </div>
+          </div>
+          <p class="project-desc">能够自动将普通图片转换为《我的世界》彩色字符画的在线网页工具，支持颜色高保真还原与自定义字符排版选项。</p>
+        </div>
+        <div class="project-footer">
+          <span class="project-tag">JavaScript / Web</span>
+          <span class="project-action-link">GitHub 仓库 ➔</span>
+        </div>
+      </a>
+
+      <!-- CloudUI -->
+      <a href="https://github.com/XiYueMax/CloudUI" target="_blank" class="project-card">
+        <div>
+          <div class="project-header">
+            <div class="project-icon">☁️</div>
+            <div>
+              <h3 class="project-title">CloudUI</h3>
+            </div>
+          </div>
+          <p class="project-desc">网易云音乐（7.10.0 版本）专属的黑白极简风格主题 UI 美化界面，极度纯粹清爽，解压即用。</p>
+        </div>
+        <div class="project-footer">
+          <span class="project-tag">UI / 主题包</span>
+          <span class="project-action-link">GitHub 仓库 ➔</span>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- 底部关于 -->
+    <footer>
+      <p>Copyright © 2026 XiYueMax · Crafted with passion for Minecraft & Open Source</p>
+    </footer>
+
+  </div>
+
+  <script>
+    // 主题切换逻辑与持久化存储
+    const toggleBtn = document.getElementById('themeToggle');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    
+    function setTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('portal_theme', theme);
+      toggleBtn.textContent = theme === 'light' ? '☀️' : '🌓';
+    }
+
+    const savedTheme = localStorage.getItem('portal_theme') || (prefersDark.matches ? 'dark' : 'light');
+    setTheme(savedTheme);
+
+    toggleBtn.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      setTheme(currentTheme === 'light' ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>
