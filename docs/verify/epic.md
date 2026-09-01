@@ -6,10 +6,10 @@ SiyoX 深度集成了 EPIC 摇光云验证，支持高强度 RSA 签名与通信
 
 ## 1. 客户端代码配置 (`SiyoX_Config.h`)
 
-将 `SIYOX_ACTIVE_VERIFY_TYPE` 设为 `0`：
+将 `SIYOX_ACTIVE_VERIFY_TYPE` 设为 `1`：
 
 ```c
-#define SIYOX_ACTIVE_VERIFY_TYPE 0
+#define SIYOX_ACTIVE_VERIFY_TYPE 1
 
 #define SIYOX_EPIC_APP_KEY       "your_epic_app_key"        // EPIC 应用 AppKey
 #define SIYOX_EPIC_PORT          5000

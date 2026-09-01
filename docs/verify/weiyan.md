@@ -6,10 +6,10 @@ SiyoX 支持微验系统的卡密单码验证、公告获取与版本更新接�
 
 ## 1. 客户端代码配置 (`SiyoX_Config.h`)
 
-将 `SIYOX_ACTIVE_VERIFY_TYPE` 设为 `2`，并填写微验相关参数：
+将 `SIYOX_ACTIVE_VERIFY_TYPE` 设为 `3`，并填写微验相关参数：
 
 ```c
-#define SIYOX_ACTIVE_VERIFY_TYPE 2
+#define SIYOX_ACTIVE_VERIFY_TYPE 3
 
 #define SIYOX_WEIYAN_API_HOST    "wy.llua.cn"                // 微验接口域名
 #define SIYOX_WEIYAN_APP_ID      "your_weiyan_app_id"        // 微验应用 ID
