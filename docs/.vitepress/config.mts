@@ -54,8 +54,7 @@ export default defineConfig({
         collapsed: false,
         items: [
           { text: '开发环境要求', link: '/build/env' },
-          { text: '源码编译与打包', link: '/build/compile' },
-          { text: 'ADB 调试与运行', link: '/build/run' }
+          { text: '源码编译与打包', link: '/build/compile' }
         ]
       }
     ],
