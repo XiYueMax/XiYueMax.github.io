@@ -1,6 +1,6 @@
 # ADB 调试与运行
 
-编译出的无签名 APK 可直接通过 ADB 推送至安卓真机或模拟器进行测试。
+完成签名后的 APK 可通过 ADB 推送至安卓真机或模拟器进行测试与运行。
 
 ---
 
@@ -9,7 +9,7 @@
 在终端中执行以下命令（强制覆盖安装）：
 
 ```powershell
-adb install -r -d app/build/outputs/apk/release/app-release-unsigned.apk
+adb install -r -d "签名后的APK路径.apk"
 ```
 
 ---
