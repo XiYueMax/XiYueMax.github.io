@@ -22,3 +22,7 @@ cd "源码存放路径"
 ```text
 app/build/outputs/apk/release/app-release-unsigned.apk
 ```
+
+### 4. 软件签名
+
+> 💡 **提示**：默认构建输出的 APK 文件为**未签名包**（Unsigned）。若要在 Android 设备或模拟器上正常安装与使用，必须先使用签名工具（如 `apksigner`、MT 管理器等）对其进行签名后方可成功安装。
