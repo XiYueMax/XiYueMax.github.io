@@ -1,4 +1,4 @@
-name: Deploy static content to Pages
+name: Deploy Unified Pages
 
 on:
   push:
@@ -15,7 +15,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy:
+  build-and-deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -23,12 +23,37 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build VitePress Docs
+        run: npm run docs:build
+
+      - name: Prepare Unified Dist
+        run: |
+          mkdir -p dist
+          cp index.html dist/
+          cp avatar.png dist/ 2>/dev/null || true
+          cp logo.png dist/ 2>/dev/null || true
+          mkdir -p dist/SiyoX-Docs
+          cp -r docs/.vitepress/dist/* dist/SiyoX-Docs/
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: 'dist'
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
