@@ -1,0 +1,103 @@
+:root {
+  -webkit-tap-highlight-color: transparent;
+}
+
+*,
+*::before,
+*::after {
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* 删除浏览器自带的点击蓝框 / 聚焦外边框 */
+*:focus,
+*:focus-visible,
+*:focus-within,
+button:focus,
+button:focus-visible,
+a:focus,
+a:focus-visible,
+input:focus,
+input:focus-visible,
+select:focus,
+select:focus-visible,
+textarea:focus,
+textarea:focus-visible,
+summary:focus,
+summary:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* 开源项目卡片组件样式 */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  margin: 20px 0 30px;
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid var(--vp-c-bg-soft);
+  border-radius: 12px;
+  background-color: var(--vp-c-bg-soft);
+  padding: 18px 20px;
+  transition: all 0.25s ease;
+  text-decoration: none !important;
+  color: inherit !important;
+}
+
+.project-card:hover {
+  border-color: var(--vp-c-brand-1);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.project-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.project-card-icon {
+  font-size: 24px;
+}
+
+.project-card-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--vp-c-text-1);
+  margin: 0;
+}
+
+.project-card-desc {
+  font-size: 13px;
+  color: var(--vp-c-text-2);
+  line-height: 1.5;
+  margin-bottom: 14px;
+  flex-grow: 1;
+}
+
+.project-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--vp-c-text-3);
+  padding-top: 10px;
+  border-top: 1px solid var(--vp-c-divider);
+}
+
+.project-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background-color: var(--vp-c-default-soft);
+  color: var(--vp-c-brand-1);
+  font-weight: 500;
+  font-size: 11px;
+}
