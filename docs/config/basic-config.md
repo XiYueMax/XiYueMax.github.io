@@ -60,6 +60,6 @@ SiyoX 的所有核心配置均集中在 Native 头文件中，无需修改 Java 
 当网络验证未配置更新标题或更新日志时，客户端弹窗将展示此处的默认内容：
 
 ```c
-#define SIYOX_DEFAULT_UPDATE_TITLE   "发现新版本"
+#define SIYOX_DEFAULT_UPDATE_TITLE   "SiyoX 更新公告"
 #define SIYOX_DEFAULT_UPDATE_LOG     "有新版本可用，请及时更新以获得最佳体验！"
 ```
