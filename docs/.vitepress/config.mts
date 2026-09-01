@@ -26,6 +26,7 @@ export default defineConfig({
         collapsed: false,
         items: [
           { text: '项目概述', link: '/guide/intro' },
+          { text: '更新日志', link: '/guide/changelog' },
           { text: '核心架构与特性', link: '/guide/features' },
           { text: '安全须知与加固建议', link: '/guide/security' }
         ]
