@@ -63,3 +63,34 @@ SiyoX 的所有核心配置均集中在 Native 头文件中，无需修改 Java 
 #define SIYOX_DEFAULT_UPDATE_TITLE   "SiyoX 更新公告"
 #define SIYOX_DEFAULT_UPDATE_LOG     "有新版本可用，请及时更新以获得最佳体验！"
 ```
+
+---
+
+## 登录视频自定义配置
+
+支持在游戏启动时自动下载并替换游戏内置登录动画背景：
+
+```c
+// 替换登录视频开关: true: 开启, false: 关闭
+#define SIYOX_ENABLE_LOGIN_VIDEO_REPLACE  false
+
+// 登录视频直链下载地址 [仅支持 MP4 格式直链]
+#define SIYOX_LOGIN_VIDEO_URL             "https://example.com/loginVideo.mp4"
+```
+
+---
+
+## 屏幕右下角水印配置
+
+支持在游戏画面右下角渲染低调优雅的文字水印：
+
+```c
+// 是否开启右下角水印: true: 开启, false: 关闭
+#define SIYOX_ENABLE_WATERMARK             true
+
+// 屏幕右下角水印展示文本
+#define SIYOX_WATERMARK_TEXT               "SiyoX Client"
+
+// 是否允许在辅助功能面板内开关水印: true: 允许, false: 不允许
+#define SIYOX_ALLOW_PANEL_TOGGLE_WATERMARK true
+```
