@@ -40,5 +40,5 @@ features:
     details: 支持灵动岛悬浮胶囊、状态圆点自由取色改色、半透明实时预览，以及游戏内实时 FPS 监测与按键回显。
   - icon: ⚔️
     title: 材质冲突清理与防检测
-    details: 内置 EntityKiller 动态解决官方模型与自定义材质冲突，配备 UniFix Bypass 智能拦截远程热更新探针。
+    details: 内置 EntityKiller 动态解决官方模型与自定义材质冲突，配备 UniFix Bypass 拦截网易下发的热更新文件补丁。
 ---
