@@ -36,7 +36,7 @@ SiyoX 的所有核心配置均集中在 Native 头文件中，无需修改 Java 
 
 ```c
 // 内部版本号（必须为整数，网络验证版本比对与更新检测时使用）
-#define SIYOX_VERSION_CODE       2
+#define SIYOX_VERSION_CODE       3
 ```
 
 - `SIYOX_VERSION_CODE`：必须为**整数**。网络验证后台进行版本检测、更新比对或参数校验时，客户端统一发送此内部整数版本号；发布更新时同步 +1。
@@ -94,3 +94,24 @@ SiyoX 的所有核心配置均集中在 Native 头文件中，无需修改 Java 
 // 是否允许在辅助功能面板内开关水印: true: 允许, false: 不允许
 #define SIYOX_ALLOW_PANEL_TOGGLE_WATERMARK true
 ```
+
+---
+
+## EntityKiller 实体冲突清理配置
+
+针对网易官方武器、护甲及实体模型对自定义材质包产生覆盖的问题进行自动清理：
+
+```c
+// 是否启用 EntityKiller: true: 开启, false: 关闭
+#define SIYOX_ENTITY_KILLER_ENABLE  true
+
+// 是否启用自定义规则: true: 开启并合并自定义规则, false: 仅使用默认规则
+#define SIYOX_ENTITY_KILLER_ENABLE_CUSTOM  false
+
+// 自定义清理规则表达式列表（以 NULL 结尾）
+#define SIYOX_ENTITY_KILLER_PATTERNS \
+    "entities/.*\\.json", \
+    "attachables/.*\\.json", \
+    NULL
+```
+

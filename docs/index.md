@@ -35,4 +35,10 @@ features:
   - icon: 🔧
     title: 全局集中式配置
     details: 客户端名称、作者、默认公告、资源包下载直链及验证密钥全部在 SiyoX_Config.h 中统一管理。
+  - icon: 🎯
+    title: 游戏 HUD 与灵动岛
+    details: 支持灵动岛悬浮胶囊、状态圆点自由取色改色、半透明实时预览，以及游戏内实时 FPS 监测与按键回显。
+  - icon: ⚔️
+    title: 材质冲突清理与防检测
+    details: 内置 EntityKiller 动态解决官方模型与自定义材质冲突，配备 UniFix Bypass 智能拦截远程热更新探针。
 ---
